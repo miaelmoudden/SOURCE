@@ -86,9 +86,6 @@ for I in range(np.shape(tirages)[0]):
     fichier.write(CHAINE9)
     CHAINE10= "\n/gate/source/mybeam"+ str(I) + "/gps/ang/sigma_y   1. deg"
     fichier.write(CHAINE10)    
-    print(tirages[I])
-    print(chaine)
-    print(CHAINE9)
 fichier.write("\n#========== Init & Visu")
 fichier.write("\n#==========")
 fichier.write("\n/vis/disable")

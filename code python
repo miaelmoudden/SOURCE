@@ -3,7 +3,7 @@ from scipy.stats import *
 multivariate_normal
 import matplotlib.pyplot as plt
 m= np.array([0,3])
-v = np.eye(2)*2
+v = np.eye(2)
 rvs = multivariate_normal(mean=m, cov=v)
 tirages = rvs.rvs(10)
 

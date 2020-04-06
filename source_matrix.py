@@ -1,25 +1,26 @@
+import random
 import numpy as np
 from scipy.stats import *
 multivariate_normal
 import matplotlib.pyplot as plt
-m= np.array([0,3])
-v = np.eye(2)
+
+
+
+data = np.random.randn(100) * sigma + mu
+
+
+Tir = 0
+while (Tir < 100): 
+    Tir=Tir+1
+    z= random.uniform(0.9,1)
+ 
+
+m= np.array([0,0])
+v = np.eye(2)*4
+mu = 10
+sigma = 2.0
 rvs = multivariate_normal(mean=m, cov=v)
-tirages = rvs.rvs(10)
-
-plt.scatter(x=tirages[:,0],
-         y=tirages[:,1],
-        color="C0",
-        label="Tirage",
-        s=0.5)
-plt.scatter(x=[0],
-            y=[0],
-            color="red",
-            label="Source",
-            s=5)
-plt.legend()
-plt.show()
-
+tirages = rvs.rvs(100)
 
 fichier = open("test3.mac", "w")
 fichier.write("/control/alias enableXrayBoundary 1")
@@ -61,31 +62,47 @@ fichier.write("\n#==========")
 fichier.write("\n/gate/run/initialize")
 fichier.write("\n#==========BEAMS")
 fichier.write("\n#==========\n")
+
+ 
+    
 for I in range(np.shape(tirages)[0]):
-    CHAINE= "\n/gate/source/addSource mybeam"+ str(I) + "   " +"gps\n"
-    fichier.write(CHAINE)
-    CHAINE1= "\n/gate/source/mybeam"+ str(I) + "/gps/particle   gamma"
-    fichier.write(CHAINE1)
-    CHAINE2= "\n/gate/source/mybeam"+ str(I) + "/gps/energy   40. keV"
-    fichier.write(CHAINE2)
-    CHAINE3= "\n/gate/source/mybeam"+ str(I) + "/gps/pos/type   Plane"
-    fichier.write(CHAINE3)
-    CHAINE4= "\n/gate/source/mybeam"+ str(I) + "/gps/pos/shape   Rectangle"
-    fichier.write(CHAINE4)
-    chaine="\n/gate/source/mybeam"+str(I)+"/gps/pos/centre " + str( tirages[I,0]) +" "+ str(tirages[I,1]) + " "+ "20 cm"
-    fichier.write(chaine)
-    CHAINE5= "\n/gate/source/mybeam"+ str(I) + "/gps/pos/halfx    1.5 mm"
-    fichier.write(CHAINE5)
-    CHAINE6= "\n/gate/source/mybeam"+ str(I) + "/gps/pos/halfy    1.5 mm"
-    fichier.write(CHAINE6)
-    CHAINE7= "\n/gate/source/mybeam"+ str(I) + "/gps/direction    0 0 1"
-    fichier.write(CHAINE7)
-    CHAINE8= "\n/gate/source/mybeam"+ str(I) + "/gps/ang/type beam2d"
-    fichier.write(CHAINE8)
-    CHAINE9= "\n/gate/source/mybeam"+ str(I) + "/gps/ang/sigma_x   1. deg"
-    fichier.write(CHAINE9)
-    CHAINE10= "\n/gate/source/mybeam"+ str(I) + "/gps/ang/sigma_y   1. deg"
-    fichier.write(CHAINE10)    
+     for nombre in data:
+
+    
+        CHAINE= "\n/gate/source/addSource mybeam"+ str(I) + "   " +"gps\n"
+        fichier.write(CHAINE)
+        CHAINE1= "\n/gate/source/mybeam"+ str(I) + "/gps/particle   gamma"
+        fichier.write(CHAINE1)
+   
+        CHAINE0= "\n/gate/source/mybeam"+str(I)+"/setIntensity " + "  "+ str(nombre)
+        fichier.write(CHAINE0)
+      
+           
+        CHAINE7= "\n/gate/source/mybeam"+ str(I) + "/gps/direction    0 0 "+ str(z)
+        fichier.write(CHAINE7)
+        
+    
+        CHAINE2= "\n/gate/source/mybeam"+ str(I) + "/gps/energy   40. keV"
+        fichier.write(CHAINE2)
+        CHAINE3= "\n/gate/source/mybeam"+ str(I) + "/gps/pos/type   Plane"
+        fichier.write(CHAINE3)
+        CHAINE4= "\n/gate/source/mybeam"+ str(I) + "/gps/pos/shape   Rectangle"
+        fichier.write(CHAINE4)
+        chaine="\n/gate/source/mybeam"+str(I)+"/gps/pos/centre " + str( tirages[I,0]) +" "+ str(tirages[I,1]) + " "+ "20 cm"
+        fichier.write(chaine)
+        CHAINE5= "\n/gate/source/mybeam"+ str(I) + "/gps/pos/halfx    1.5 mm"
+        fichier.write(CHAINE5)
+        CHAINE6= "\n/gate/source/mybeam"+ str(I) + "/gps/pos/halfy    1.5 mm"
+        fichier.write(CHAINE6)
+    
+    
+        CHAINE8= "\n/gate/source/mybeam"+ str(I) + "/gps/ang/type beam2d"
+        fichier.write(CHAINE8)
+        CHAINE9= "\n/gate/source/mybeam"+ str(I) + "/gps/ang/sigma_x   1. deg"
+        fichier.write(CHAINE9)
+        CHAINE10= "\n/gate/source/mybeam"+ str(I) + "/gps/ang/sigma_y   1. deg"
+        fichier.write(CHAINE10)    
+        
 fichier.write("\n#========== Init & Visu")
 fichier.write("\n#==========")
 fichier.write("\n/vis/disable")

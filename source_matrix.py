@@ -94,10 +94,20 @@ for I , nombre in zip( range(np.shape(tirages)[0]) , data):
     fichier.write(CHAINE0)
                                                                          
     Tir = 0 
-    Tir=Tir+1
-    z= random.uniform(0.8,1)
-    CHAINE7= "\n/gate/source/mybeam"+ str(I) + "/gps/direction    0 0 "+ f"{z:.{precision}f}"+"\n"
-    fichier.write(CHAINE7)  
+    while(Tir <5):
+        Tir=Tir+1
+        x=random.uniform(0, 0.1)
+        y=random.uniform(0, 0.1)
+        z= random.random()
+        m= sqrt(x*x+y*y+z*z)
+        X=x/m
+        Y=y/m
+        Z=z/m
+        M= sqrt(X*X+Y*Y+Z*Z)
+        
+        CHAINE7= "\n/gate/source/mybeam"+ str(I) + "/gps/direction    "+f" {X:.{precision}f}"+f" {Y:.{precision}f}"+ f" {Z:.{precision}f}"+"\n"
+        fichier.write(CHAINE7)
+    
  
 fichier.write("/gate/source/list")
 fichier.write("\n#========== Init & Visu")

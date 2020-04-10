@@ -3,20 +3,15 @@ import numpy as np
 from scipy.stats import *
 multivariate_normal
 import matplotlib.pyplot as plt
-from math import pi
-    
+from math import *
+
 precision=3
+N=1000 
+sigma =2
+mu = 10
+data = np.random.randn(N) * sigma + mu
 
-m= np.array([0,0])
-v = np.eye(2)*2
-rvs = multivariate_normal(mean=m, cov=v)
-tirages = rvs.rvs(1000)
-
-sigma = 2
-mu = 15
-data = np.random.randn(1000) * sigma + mu
-
-fichier = open("matricex.mac", "w")
+fichier = open("matrice.mac", "w")
 fichier.write("/control/alias enableXrayBoundary 1")
 fichier.write("\n#========================VERBOSITY#========================")
 fichier.write("\n#/control/execute mac/verbose.mac")
@@ -58,7 +53,7 @@ fichier.write("\n/gate/run/initialize")
 fichier.write("\n#==========BEAMS")
 fichier.write("\n#==========\n")
 
-for I , nombre in zip( range(np.shape(tirages)[0]) , data):
+for I, nombre in zip(range(N), data):
           
     
    
@@ -74,14 +69,18 @@ for I , nombre in zip( range(np.shape(tirages)[0]) , data):
     fichier.write(CHAINE2)
     CHAINE3="\n/gate/source/mybeam"+str(I)+"/gps/pos/type     Plane"
     fichier.write(CHAINE3)
-    CHAINE4="\n/gate/source/mybeam"+str(I)+"/gps/pos/shape    Rectangle"
+    CHAINE4="\n/gate/source/mybeam"+str(I)+"/gps/pos/shape    Circle"
     fichier.write(CHAINE4)
-    chaine="\n/gate/source/mybeam"+ str(I)+"/gps/pos/centre " + f"{tirages[I,0]:.{precision}f}"+"  "+ f"{tirages[I,1]:.{precision}f}" + " "+ "5. cm"
+    
+    x=random.uniform(-6,6)
+    y=random.uniform(-6,6)
+    chaine="\n/gate/source/mybeam"+ str(I)+"/gps/pos/centre " + f"{x:.{precision}f}"+"  "+ f"{y:.{precision}f}" + " "+ "5. cm"
     fichier.write(chaine)
-    CHAINE5="\n/gate/source/mybeam"+str(I)+"/gps/pos/halfx    1.5 mm"
+                                                                                          
+                                                                                                         
+                                                                                                         
+    CHAINE5="\n/gate/source/mybeam"+str(I)+"/gps/pos/radius    1. mm"
     fichier.write(CHAINE5)
-    CHAINE6="\n/gate/source/mybeam"+str(I)+"/gps/pos/halfy    1.5 mm"
-    fichier.write(CHAINE6)
 
     CHAINE8="\n/gate/source/mybeam"+str(I)+"/gps/ang/type beam2d"
     fichier.write(CHAINE8)
@@ -94,21 +93,20 @@ for I , nombre in zip( range(np.shape(tirages)[0]) , data):
     fichier.write(CHAINE0)
                                                                          
     Tir = 0 
-    while(Tir <5):
+    while(Tir <1):
         Tir=Tir+1
-        x=random.uniform(0, 0.1)
+        x=random.uniform(0,0.1)
         y=random.uniform(0, 0.1)
         z= 1
         m= sqrt(x*x+y*y+z*z)
         X=x/m
         Y=y/m
         Z=z/m
-        
-        
+        M= sqrt(X*X+Y*Y+Z*Z)
+
         CHAINE7= "\n/gate/source/mybeam"+ str(I) + "/gps/direction    "+f" {X:.{precision}f}"+f" {Y:.{precision}f}"+ f" {Z:.{precision}f}"+"\n"
         fichier.write(CHAINE7)
-    
- 
+  
 fichier.write("/gate/source/list")
 fichier.write("\n#========== Init & Visu")
 fichier.write("\n#==========")

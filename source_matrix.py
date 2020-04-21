@@ -65,7 +65,7 @@ for I, nombre in zip(range(N), data):
     
     CHAINE1="\n/gate/source/mybeam"+str(I)+"/gps/particle     gamma"
     fichier.write(CHAINE1)
-    CHAINE2="\n/gate/source/mybeam"+str(I)+"/gps/energy       40. keV"
+    CHAINE2="\n/gate/source/mybeam"+str(I)+"/gps/energy       52. keV"
     fichier.write(CHAINE2)
     CHAINE3="\n/gate/source/mybeam"+str(I)+"/gps/pos/type     Plane"
     fichier.write(CHAINE3)
@@ -79,7 +79,7 @@ for I, nombre in zip(range(N), data):
                                                                                           
                                                                                                          
                                                                                                          
-    CHAINE5="\n/gate/source/mybeam"+str(I)+"/gps/pos/radius    1. mm"
+    CHAINE5="\n/gate/source/mybeam"+str(I)+"/gps/pos/radius    30. um"
     fichier.write(CHAINE5)
 
     CHAINE8="\n/gate/source/mybeam"+str(I)+"/gps/ang/type beam2d"
@@ -95,8 +95,8 @@ for I, nombre in zip(range(N), data):
     Tir = 0 
     while(Tir <1):
         Tir=Tir+1
-        x=random.uniform(0,0.1)
-        y=random.uniform(0, 0.1)
+        x=random.uniform(0,0.0001)
+        y=random.uniform(0, 0.0001)
         z= 1
         m= sqrt(x*x+y*y+z*z)
         X=x/m
@@ -104,7 +104,7 @@ for I, nombre in zip(range(N), data):
         Z=z/m
         M= sqrt(X*X+Y*Y+Z*Z)
 
-        CHAINE7= "\n/gate/source/mybeam"+ str(I) + "/gps/direction    "+f" {X:.{precision}f}"+f" {Y:.{precision}f}"+ f" {Z:.{precision}f}"+"\n"
+        CHAINE7= "\n/gate/source/mybeam"+ str(I) + "/gps/direction    "+f" {X}"+f" {Y}"+ f" {Z}"+"\n"
         fichier.write(CHAINE7)
   
 fichier.write("/gate/source/list")

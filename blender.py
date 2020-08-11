@@ -7,7 +7,7 @@ import json
 
 membraneSize = 50.0 #(en dizaine de um)
 sideSize = 150.0 #(en dizaine de um)
-numberOfSpheres = 500
+numberOfSpheres = 2000
 
 # ---- Bottom Membrane  "ground" ----
 bpy.ops.mesh.primitive_plane_add(size=membraneSize, align='WORLD', location=(0, 0, 0.1))
@@ -183,7 +183,7 @@ with open("/home/lmoudden/lamia/blender/test.mac", "w") as fp:
 
     fichier = fp.write("\n# Stack of spheres")
     sphereList = []
-    for I, s in zip(range(0,500), spheres):
+    for I, s in zip(range(0,2000), spheres):
         o = s.matrix_world.to_translation()
         radius = sum(s.dimensions) / 6 # sphere radius estimation
     
